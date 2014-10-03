@@ -1,0 +1,30 @@
+Martin Liu - hw01
+
+Question 2: system.txt has permissions 'read' and 'write' for owner, and permission 'read' for group owner and all other users; owner is 'purecoke' (my user name)
+
+Question 3: disk usage (total): 444K; used command: du -h -c
+	        apparent size: 347K; used command: du -h --apparent
+
+Question 4: chmod 600 system.txt
+
+Question 5:
+perms.sh:
+#!/bin/bash
+chmod 600 ~/Dropbox/COSC_301_OS/cosc301_hw01/systems.txt
+ls -l ~/Dropbox/COSC_301_OS/cosc301_hw01/
+
+command line to change perms.sh permission: chmod u+x perms.sh
+
+Question 6: 
+(1) the dot (.) refers the the directory;
+(2) we need to use ./ to tell the system to search for the shell script/command in the current directory, alternatively we can move the shell script in to one of the directories of $PATH, to execute the command without specifying the path.
+
+Question 7: ls -Ra -l -S
+largest file: .w
+
+Question 8:
+a. grep x systems.txt | wc -l
+b. grep -v os systems.txt | wc -l
+c. ps aux | grep `whoami` | sort -k4 -nr
+d. ps aux | awk '{print $1}' | sort | uniq -c | sort -nr
+
