@@ -1,0 +1,28 @@
+{-1-}
+average turnaround time: (33+15+44+32+47+58+78+27+29+77+84+45+32)/13 = 46.23 sec
+average wait time: (9+3+12+6+24+40+63+2+23+61+72+26+17)/13 = 27.54 sec
+
+{-2-}
+lengths: 24,13,32,24,23,18,15,25,6,16,12,19,15
+
+The algorithm w/ the best average turnaround and wait time: SJF
+
+This algorithm could not be used in a real life scenario because if a customer is buying an item that takes slightly longer than those of other customers’ to process, then even if s/he gets to the counter before everyone else s/he still has to wait for everyone else to check out first, which is extremely bad in terms of fairness.
+
+{-3-}
+When the jobs are sorted in ascending order, SJF and FIFO deliver the same turnaround time (since in this case SJF process the jobs in the same order as FIFO).
+
+{-4-}
+When the jobs are sorted and the quantum length is greater than longest job (so no job is done in a span of multiple time slices and RR and SJF run process the same jobs for the same amount of time, in the same order).
+
+{-5-}
+Customers with long jobs might get relatively evenly distributed in all queues and cause convoy effect for everyone.
+
+{-6-}
+Compared to using single register (processor), using multiple register obviously will improve all metrics since there are more processing power. Compared to the scheme in problem 5, this scheduling scheme would improve FIFO because potentially, when heavy tasks are followed by a bunch of lighter tasks, using a single queue allows lighter tasks to be processed concurrently (at different registers) with the heavy tasks, whereas if we are using the scheme in 5 and with the same ordering of tasks to be processed, we can get convoy effect at all registers. FIFO can also get the worst performance because if all the heavy tasks come before the light ones, then the convoy effect would happen at every register.
+
+{-7-}
+(a)
+(1*10 + 1)/(1*10 + 0.1*11 + 1) = 90.91%
+(b)
+(1*10 + 10)/(1*10 + 0.1*11 + 10) = 94.79% 
