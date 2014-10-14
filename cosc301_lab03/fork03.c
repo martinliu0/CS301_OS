@@ -19,7 +19,7 @@ int main(int argc, char **argv)
     else{
         
         int child;
-        if((pid = wait(&child))>-1){  
+        if((pid = wait(&child))>-1) {  
             printf("This should print to the screen, right?\n");
         }
     }

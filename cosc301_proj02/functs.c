@@ -9,49 +9,35 @@
 #include <math.h>
 
 
-char** tokenify(char *s) {
+char** tokenify(const char *s, char *delimiter) {
     char *strcopy = strdup(s); 
-    char *token = strtok(strcopy, " \n\t;");
-    printf("what is the token: %s\n", token);
+    char *token = strtok(strcopy, delimiter);
     int str_arr_size = sizeof(token);
-    char *mode = NULL;
     while (token != NULL) {
-        token = strtok(NULL, " \n\t;");
-       // printf("what is the token: %s\n", token);
-        if(token == NULL){
-            break;
-        }
-		if(strcasecmp("mode", token)==0){
-			mode = strtok(NULL, " \n\t;");
-            //printf("what is mode: %s\n", mode);
-		}
+        token = strtok(NULL, delimiter);
         str_arr_size += sizeof(token);
-		
     }
-
     free(strcopy);
     char *another_copy = strdup(s);
-    char *another_token = strtok(another_copy, " \n\t;");
+    char *another_token = strtok(another_copy, delimiter);
     char **strarr = malloc(str_arr_size);
-    int count = 1;
-	strarr[0] = mode; 
-
+    int count = 0;
     while (another_token != NULL) {
-		if(strcasecmp(another_token, "mode") != 0 && strcasecmp(another_token, "s") != 0 && strcasecmp(another_token, "p") != 0){
-			strarr[count] = another_token; //no strdup?
-            //printf("another_token: %s\n", another_token);
-			another_token = strtok(NULL, " \n\t");
-			count++;
-		}
-        else{
-            another_token = strtok(NULL, " \n\t");  
-        }
+        strarr[count] = strdup(another_token);
+        another_token = strtok(NULL, delimiter);
+        count++;
     }
     free(another_copy);
     strarr[count] = NULL;   
     return strarr; 
 }
 
+void free_tokens(char **tokens){
+    int i = 0;
+    while(tokens[i] != NULL){
+        free(tokens[i]);
+    }
+}
 
 void replace_pound(char *s){
     for (int i = 0; i < strlen(s); i++){
