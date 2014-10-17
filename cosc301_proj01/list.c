@@ -57,5 +57,25 @@ void sorted_insert(int data, Node **head) {
 
 }
 
+void insert(int data, Node **head){
+    if ((*head) == NULL) {
+        Node *newnode = malloc(sizeof(Node));
+        newnode->data = data;
+        newnode->next = NULL;
+        *head = newnode; 
+    }
+    else{
+        Node *curr = *head;
+        while(curr->next != NULL){
+            curr = curr->next;
+        }
+        Node *newnode = malloc(sizeof(Node));
+        newnode->next = NULL;
+        newnode->data = data;
+        curr->next = newnode;
+
+    }
+}
+
 
 
