@@ -77,7 +77,6 @@ int run_command(char **s, int mode, Node **head, Process **p){ //returns the end
 			continue;
 		}
 		if(strcasecmp(temp[0], "jobs") == 0){
-			printf("what is process 1: %d\n", (*p)->p_id);
 			jobs(*p);
 			i++;
 			free_tokens(temp);
