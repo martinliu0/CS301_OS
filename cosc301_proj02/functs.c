@@ -14,7 +14,8 @@
 #include <time.h>
 #include "functs.h"
 #include "list.h"
-
+#include <inttypes.h>
+#include <iso646.h>
 
 char** tokenify(const char *s, char *delimiter) {
     char *strcopy = strdup(s); 
@@ -64,6 +65,7 @@ void replace_pound(char *s){
         }
     }
 }
+
 void print_prompt(int i){
     if (i == 1){
         printf("%s", "prompt (parallel)> ");
@@ -144,32 +146,6 @@ int find_mode(char *s){
 
 }
 
-/*int find_exit(char **s){
-    int i = 0;
-    if (s[i] == NULL){
-        return -1;
-    }
-
-    while(s[i] != NULL){
-        char *copy = strdup(s[i]);
-        char **copy2 = tokenify(copy, " \n\t");
-        if(copy2[0]!= NULL){
-            if(strcasecmp(copy2[0], "exit") == 0){
-                free(copy);
-                free_tokens(copy2);
-                return i; //there is exit command 
-            }
-        }
-
-        i++;
-        free(copy);
-        free_tokens(copy2);
-    }
-
-
-    return -1; //no exit command
-
-}*/
 
 char *prepend(char *s, Node **head){
     int i = 0;
@@ -233,6 +209,10 @@ char *test_commands(char *s, Node **head){
 
 void jobs(Process *head){
     //Process *curr = *head;
+    if (head == NULL){
+        printf("No process at this time.\n");
+        return;
+    }
     while(head!=NULL){
         printf("Process %d (%s) %s\n", (head)->p_id, (head)->instr, (head)->status);
         head = head->next;
@@ -250,3 +230,13 @@ void chang_status(pid_t id, char *update, Process **head){
     }
 }
 
+int is_process(pid_t id, Process *head){
+    while(head != NULL){
+        if (head->p_id == id){
+            return 1;
+        }
+        head = head->next;
+    }
+    printf("Bad pid '%d'\n", id);
+    return 0;
+}

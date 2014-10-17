@@ -84,11 +84,34 @@ int run_command(char **s, int mode, Node **head, Process **p){ //returns the end
 			free(commands);
 			continue;
 		}
-	/*		if(strcasecmp(temp[0], "pause") == 0){
-				if(temp[1] != NULL){
-					kill(temp[1], )
-				}
-			}*/
+	    if(strcasecmp(temp[0], "pause") == 0){
+	    	if (temp[1] != NULL){
+	    		char *temp1 = strdup(temp[1]);
+	    		int temp = atoi(temp1);
+	    		free(temp1);
+		    	pid_t w = (pid_t) temp;
+		    	if (is_process(w, *p)){
+		    		kill(w, SIGSTOP);
+		    	}	    		
+	    	}
+	    	else {
+	    		printf("Please give a pid for command 'pause'.\n");
+	    	}	
+		}
+	    if(strcasecmp(temp[0], "resume") == 0){
+	    	if (temp[1] != NULL){
+	    		char *temp1 = strdup(temp[1]);
+	    		int temp = atoi(temp1);
+	    		free(temp1);
+		    	pid_t w = (pid_t) temp;
+		    	if (is_process(w, *p)){
+		    		kill(w, SIGCONT);
+		    	}	    		
+	    	}
+	    	else {
+	    		printf("Please give a pid for command 'resume'.\n");
+	    	}	
+		}
 		temp[0] = test_commands(temp[0], head);
 
 		pid_t pid = fork();

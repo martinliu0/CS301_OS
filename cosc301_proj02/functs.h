@@ -14,4 +14,5 @@ char *prepend(char *, Node **);
 void jobs(Process *);
 void change_status(pid_t, char *, Process **);
 void print_prompt(int );
+int is_process(pid_t, Process *);
 #endif
