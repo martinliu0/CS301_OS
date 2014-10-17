@@ -17,21 +17,6 @@
 /*
 Author: Martin Liu
 */
-/*int count_commands(char **s){
-	int i = 0;
-	int count =0;
-	while(s[i] != NULL){
-		char *commands = strdup(s[i]); 
-		char **temp = tokenify(commands, " \t\n");
-		if(find_mode(s[i]) == 2 && strcasecmp(commands, "exit") != 0){
-			count ++;
-		}
-		i++;
-		free(commands);
-		free_tokens(temp);
-	}
-	return count;
-}*/
 
 
 int run_command(char **s, int mode, Node **head, Process **p){ //returns the end mode
@@ -86,29 +71,52 @@ int run_command(char **s, int mode, Node **head, Process **p){ //returns the end
 	    if(strcasecmp(temp[0], "pause") == 0){
 	    	if (temp[1] != NULL){
 	    		char *temp1 = strdup(temp[1]);
-	    		int temp = atoi(temp1);
+	    		int temp2 = atoi(temp1);
 	    		free(temp1);
-		    	pid_t w = (pid_t) temp;
+
+		    	pid_t w = (pid_t) temp2;
+		    	printf("what is pid: %d\n", w);
 		    	if (is_process(w, *p)){
 		    		kill(w, SIGSTOP);
-		    	}	    		
+		    		new_status(w, "paused", p);
+		    		jobs(*p);
+		    	}
+
+		    	i++;
+				free_tokens(temp);
+				free(commands);
+		    	continue;    		
 	    	}
 	    	else {
 	    		printf("Please give a pid for command 'pause'.\n");
+	    		i++;
+				free_tokens(temp);
+				free(commands);
+		    	continue;    
 	    	}	
 		}
 	    if(strcasecmp(temp[0], "resume") == 0){
 	    	if (temp[1] != NULL){
 	    		char *temp1 = strdup(temp[1]);
-	    		int temp = atoi(temp1);
+	    		int temp2 = atoi(temp1);
 	    		free(temp1);
-		    	pid_t w = (pid_t) temp;
+		    	pid_t w = (pid_t) temp2;
 		    	if (is_process(w, *p)){
 		    		kill(w, SIGCONT);
-		    	}	    		
+		    		new_status(w, "running", p);
+		    		jobs(*p);
+		    	}	
+		    	i++;
+				free_tokens(temp);
+				free(commands);
+		    	continue;        		
 	    	}
 	    	else {
 	    		printf("Please give a pid for command 'resume'.\n");
+	    		i++;
+				free_tokens(temp);
+				free(commands);
+		    	continue;    
 	    	}	
 		}
 		temp[0] = test_commands(temp[0], head);
@@ -166,7 +174,9 @@ int check_process(Process **p){
 	while(temp != NULL){
 		int status = waitpid(temp->p_id, NULL, WNOHANG);
 		if (status > 0){
+			temp->instr[strlen(temp->instr)-1] = '\0';
 			printf("Process %d (%s) is completed.\n", temp->p_id, temp->instr);
+			fflush(stdout);	
 			delete_process(temp->p_id,p);
 			any_completion = 1;
 		}

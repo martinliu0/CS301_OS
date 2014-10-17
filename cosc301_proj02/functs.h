@@ -12,7 +12,7 @@ void setup_shell(Node **, FILE *);
 char *test_commands(char *, Node **);
 char *prepend(char *, Node **);
 void jobs(Process *);
-void change_status(pid_t, char *, Process **);
+void new_status(pid_t, char *, Process **);
 void print_prompt(int );
 int is_process(pid_t, Process *);
 #endif

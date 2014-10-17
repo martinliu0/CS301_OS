@@ -214,13 +214,13 @@ void jobs(Process *head){
         return;
     }
     while(head!=NULL){
-        printf("Process %d (%s) %s\n", (head)->p_id, (head)->instr, (head)->status);
+        printf("Process %d %s %s\n", (head)->p_id, (head)->instr, (head)->status);
         head = head->next;
     }
     
 }
 
-void chang_status(pid_t id, char *update, Process **head){
+void new_status(pid_t id, char *update, Process **head){
     Process *curr = *head;
     while(curr!= NULL){
         if (curr->p_id == id){
