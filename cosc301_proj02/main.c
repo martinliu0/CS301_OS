@@ -174,10 +174,12 @@ int check_process(Process **p){
 	while(temp != NULL){
 		int status = waitpid(temp->p_id, NULL, WNOHANG);
 		if (status > 0){
+			//printf("what is jobs: %s\n", temp->instr);
 			temp->instr[strlen(temp->instr)-1] = '\0';
 			printf("Process %d (%s) is completed.\n", temp->p_id, temp->instr);
 			fflush(stdout);	
 			delete_process(temp->p_id,p);
+			jobs(*p);
 			any_completion = 1;
 		}
 

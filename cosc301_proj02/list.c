@@ -75,7 +75,7 @@ void add_process(pid_t id, char *a, char *b, Process **head){
 void delete_process(pid_t id, Process **head){
     Process *newprocess = *head;
     if(newprocess != NULL){
-        if (newprocess->p_id == id && newprocess->next != NULL){
+        if (newprocess->p_id == id && newprocess->next == NULL){
             *head = (*head)->next;
             free(newprocess);
             return;
